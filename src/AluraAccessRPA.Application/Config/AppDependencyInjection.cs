@@ -1,5 +1,7 @@
-﻿using AluraAccessRPA.Infrastructure.Context;
+﻿using AluraAccessRPA.Domain.Interfaces;
+using AluraAccessRPA.Infrastructure.Context;
 using AluraAccessRPA.Infrastructure.Data;
+using AluraAccessRPA.Infrastructure.Services;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +21,7 @@ public static class AppDependencyInjection
         var connectionString = Configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<AluraDbContext>(x => x.UseSqlite(connectionString));
         services.AddTransient<RepositoryAlura>();
+        services.AddSingleton<IDriverFactoryService,DriverFactoryService>();
         //services.AddSingleton<IFileService, FileService>();
 
         return services;
