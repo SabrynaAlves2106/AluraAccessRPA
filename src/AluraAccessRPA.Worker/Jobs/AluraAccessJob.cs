@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace AluraAccessRPA.Worker.Jobs;
 
-namespace AluraAccessRPA.Worker.Jobs
+public class AluraAccessJob : IJob
 {
-    internal class AluraAccessJob
+    public Task Execute(IJobExecutionContext context)
     {
+        throw new NotImplementedException();
     }
 }

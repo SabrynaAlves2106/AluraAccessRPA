@@ -1,7 +1,5 @@
 ﻿
 
-using Microsoft.Extensions.Hosting;
-
 IConfiguration Configuration = default;
 IHostEnvironment HostingEnvironment = default;
 
@@ -20,7 +18,7 @@ IHost host = Host.CreateDefaultBuilder(args)
         services.AddQuartz(q =>
         {
             q.UseMicrosoftDependencyInjectionJobFactory();
-            q.AddJobAndTrigger<WebRequestJob>(Configuration);
+            q.AddJobAndTrigger<AluraAccessJob>(Configuration);
 
         })
         .AddQuartzHostedService(q => q.WaitForJobsToComplete = true);

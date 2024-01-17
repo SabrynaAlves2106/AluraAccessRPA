@@ -1,4 +1,4 @@
-namespace COE401.RPA.VivoRelatorioProcessum.Worker.Extensions;
+namespace AluraAccessRPA.Worker.Extensions;
 public static class QuartzExtensions
 {
     public static void AddJobAndTrigger<T>(this IServiceCollectionQuartzConfigurator quartz,
