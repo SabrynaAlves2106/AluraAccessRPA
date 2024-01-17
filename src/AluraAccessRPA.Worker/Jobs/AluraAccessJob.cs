@@ -1,9 +1,24 @@
-﻿namespace AluraAccessRPA.Worker.Jobs;
+﻿using AluraAccessRPA.Infrastructure.Data;
+using AluraAccessRPA.Worker.Common;
 
-public class AluraAccessJob : IJob
+
+namespace AluraAccessRPA.Worker.Jobs;
+
+public class AluraAccessJob : JobBase
 {
-    public Task Execute(IJobExecutionContext context)
+    RepositoryAlura _repository { get; init; }
+    public AluraAccessJob(ILogger<JobBase> logger, RepositoryAlura repository):base(logger)
     {
-        throw new NotImplementedException();
+        _repository= repository;
+    }
+    public override async Task Execute(IJobExecutionContext context)
+    {
+        try
+        {
+            var result = _repository.ObterDados();
+        }
+        catch(Exception ex) 
+        {
+        }
     }
 }

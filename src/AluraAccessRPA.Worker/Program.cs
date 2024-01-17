@@ -1,5 +1,7 @@
 ﻿
 
+using AluraAccessRPA.Application.Config;
+
 IConfiguration Configuration = default;
 IHostEnvironment HostingEnvironment = default;
 
@@ -13,7 +15,7 @@ IHost host = Host.CreateDefaultBuilder(args)
             .AddEnvironmentVariables()
             .Build();
 
-        services.AddAppDependencies();
+        services.AddAppDependencies(Configuration);
         services.AddMediatR(Assembly.GetExecutingAssembly());
         services.AddQuartz(q =>
         {
