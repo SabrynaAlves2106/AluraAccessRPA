@@ -28,7 +28,7 @@ public static class AppDependencyInjection
         services.AddSingleton<ControllerAlura>();
         services.AddSingleton<AluraPage>();
         services.AddSingleton<Navigator>();
-
+        services.AddSingleton(Configuration);
 
         //services.AddSingleton<IFileService, FileService>();
 

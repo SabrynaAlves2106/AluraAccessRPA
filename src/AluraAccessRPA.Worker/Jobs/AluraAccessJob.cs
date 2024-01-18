@@ -17,12 +17,12 @@ public class AluraAccessJob : JobBase
     private IDriverFactoryService _driverFactoryService { get; set; }
     private readonly Navigator _navigator;
     protected readonly IConfiguration _configuration;
-    
+
     public AluraAccessJob(ILogger<JobBase> logger, RepositoryAlura repository,
-        IDriverFactoryService driverFactoryService,Navigator navigator,
-        IConfiguration configuration):base(logger)
+        IDriverFactoryService driverFactoryService, Navigator navigator,
+        IConfiguration configuration) : base(logger)
     {
-        _repository= repository;
+        _repository = repository;
         _driverFactoryService = driverFactoryService;
         _navigator = navigator;
         _configuration = configuration;
@@ -33,13 +33,27 @@ public class AluraAccessJob : JobBase
         {
             var url = _configuration["UrlAlura"];
             var course = _configuration["Course"];
+
+            _logger.LogInformation("Instalando e iniciando o Chrome");
             SetupDriver();
-            var listCourse =_navigator.StartNavigate(url,course);
+            
+            _logger.LogInformation("Começo da navegação");
+            var listCourse = _navigator.StartNavigate(url, course);
+
+            _logger.LogInformation("Inserindo as informações retornadas no banco de dados, arquivo db");
             _repository.InsertAll(listCourse);
+
+            _logger.LogInformation("Retornando dados do Banco");
             var result = _repository.ObterDados();
         }
-        catch(Exception ex) 
+        catch (Exception ex)
         {
+            _logger.LogError(ex.Message);
+            _driverFactoryService.Quit();
+        }
+        finally
+        {
+            _driverFactoryService.Quit();
         }
     }
 
@@ -52,7 +66,7 @@ public class AluraAccessJob : JobBase
         options.AddUserProfilePreference("default_content_setting_values.script_time", 0);
         options.AddArgument("--no-sandbox");
         _driverFactoryService.StartDriver(EDriverType.Chrome, options);
-       
+
 
     }
 }

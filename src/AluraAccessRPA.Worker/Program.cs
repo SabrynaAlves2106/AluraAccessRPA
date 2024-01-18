@@ -9,9 +9,12 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         HostingEnvironment = context.HostingEnvironment;
+        var appPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         Configuration = new ConfigurationBuilder()
-            .SetBasePath(context.HostingEnvironment.ContentRootPath)
+            .SetBasePath(appPath)
             .AddJsonFile("appsettings.json")
+            .AddJsonFile($"appsettings.{context.HostingEnvironment.EnvironmentName}.json")
+            .AddJsonFile(@"Selenium\Elements\ElementsAlura.json")
             .AddEnvironmentVariables()
             .Build();
 

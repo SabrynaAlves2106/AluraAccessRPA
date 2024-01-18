@@ -19,7 +19,7 @@ public class ControllerAlura
     {
         return _aluraPage.SearchCourse(course);
     }
-    public (NavigateResult,List<CourseInformation>) GetInformation(IEnumerable<string> itens)
+    public (NavigateResult navigateResult,List<CourseInformation> ListCourses) GetInformation(IEnumerable<string> itens)
     {
         return _aluraPage.GetInformation(itens);
     }

@@ -12,6 +12,7 @@ public static class QuartzExtensions
             throw new Exception($"No Quartz.NET Cron schedule found for job in configuration at {jobName}");
 
         var instances = int.Parse(config[$"Quartz:{jobName}:Instances"]);
+
         for (int i = 0; i < instances; i++)
         {
             var jobKey = new JobKey($"{jobName}:Instance:{i + 1}", group);

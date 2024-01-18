@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <Content Include="appsettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -42,6 +42,12 @@
     <ProjectReference Include="..\AluraAccessRPA.Application\AluraAccessRPA.Application.csproj" />
     <ProjectReference Include="..\AluraAccessRPA.Domain\AluraAccessRPA.Domain.csproj" />
     <ProjectReference Include="..\AluraAccessRPA.Infrastructure\AluraAccessRPA.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

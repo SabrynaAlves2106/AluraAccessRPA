@@ -20,7 +20,6 @@ public class DriverFactoryService : IDriverFactoryService
     {
         if (_driver is null)
             _driver = Instantiate(driverType, opts);
-        //_driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds();
 
         return _driver;
     }
@@ -41,5 +40,9 @@ public class DriverFactoryService : IDriverFactoryService
 
     }
 
-    public void Quit() => _driver?.Quit();
+    public void Quit()
+    {
+        _driver?.Quit();
+        _driver= null;
+    }
 }

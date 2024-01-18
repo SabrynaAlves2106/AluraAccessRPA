@@ -1,16 +1,21 @@
-﻿using AluraAccessRPA.Application.Selenium.Extensions;
+﻿using AluraAccessRPA.Application.Selenium.Elements;
+using AluraAccessRPA.Application.Selenium.Extensions;
 using AluraAccessRPA.Domain.Entities;
 using AluraAccessRPA.Domain.Interfaces;
+using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
-using System.Security;
 
 namespace AluraAccessRPA.Application.Selenium.Page;
 
-public class AluraPage
+public class AluraPage : ElementsAlura
 {
     private readonly IDriverFactoryService _driverFactoryService;
     private IWebDriver _driver => _driverFactoryService.Instance;
-    public AluraPage(IDriverFactoryService driverFactoryService) => _driverFactoryService = driverFactoryService;
+
+    public AluraPage(IDriverFactoryService driverFactoryService, IConfiguration configuration) : base(configuration)
+    {
+        _driverFactoryService = driverFactoryService;
+    }
     public NavigateResult AccessPage(string url)
     {
         try
@@ -27,10 +32,9 @@ public class AluraPage
     {
         try
         {
-
-            _driver.WaitElement(By.XPath("//input[@placeholder='O que você quer aprender?']")).SendKeys(course);
-            _driver.WaitElement(By.XPath("//button[@class='header__nav--busca-submit']")).ClickNoWait();
-            var itens = _driver.WaitElements(By.XPath("//li[@class='busca-resultado']")).Select((element, v) =>
+            _driver.WaitElement(inputSearch).SendKeys(course);
+            _driver.WaitElement(btnSearch).ClickNoWait();
+            var itens = _driver.WaitElements(getCouses).Select((element, v) =>
             {
                 return element.FindElement(By.TagName("h4")).Text;
             }
@@ -53,7 +57,7 @@ public class AluraPage
             foreach (var courseName in itens)
             {
                 //Captura a descrição antes de entrar no link
-                var description = _driver.WaitElement(By.XPath($"//h4[contains(text(),'{courseName}')]/following-sibling::p")).Text;
+                var description = _driver.WaitElement(By.XPath(string.Format( descriptionText,courseName))).Text;
 
                 //Clica no link do curso
                 _driver.WaitElement(By.XPath($"//*[contains(text(),'{courseName}')]")).ClickNoWait();
@@ -61,11 +65,11 @@ public class AluraPage
                 //Pega todos os elementos que contém nome dos instrutores
                 var instructorElements = _driver.WaitElements(By.XPath("//div/h3[@class = 'instructor-title--name'] | //div/h3[@class = 'formacao-instrutor-nome']"));
 
-                string nameInstructors = instructorElements.Count() >0 ? String.Join(", ", instructorElements.Select(x => x.Text).Where(x=> x != "")) : "Nome dos instrutores não esta disponivel";
+                string nameInstructors = instructorElements.Count() > 0 ? string.Join(", ", instructorElements.Select(x => x.Text).Where(x => x != "")) : "Nome dos instrutores não esta disponivel";
 
                 //Pega a carga horaria caso exista
-                var workloadElement = _driver.WaitElement(By.XPath("//*[@class = 'formacao__info-conclusao'] | //*[@class='formacao__info-destaque']"),5);
-                var valueWorkload = workloadElement is not null ? workloadElement.Text : "Carga horaria não esta disponivel";
+                var workloadElement = _driver.WaitElement(By.XPath("//*[@class = 'formacao__info-conclusao'] | //div[@class='formacao__info-destaque']"), 5);
+                var valueWorkload = workloadElement is not null ? workloadElement.Text.Split("\r")[0] : "Carga horaria não esta disponivel";
 
                 //Adiciona as informações na lista
                 list.Add(new() { Title = courseName, Teacher = nameInstructors, Description = description, WorkLoad = valueWorkload });
@@ -81,7 +85,7 @@ public class AluraPage
         }
         finally
         {
-            _driver.Quit();
+            _driverFactoryService.Quit();
         }
     }
 }

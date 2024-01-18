@@ -1,3 +1,11 @@
 {
 
+  "Search": {
+    "Input": "//input[@placeholder='O que você quer aprender?']",
+    "BtnSearch": "//button[@class='header__nav--busca-submit']",
+    "GetCourses": "//li[@class='busca-resultado']"
+  },
+  "GetInfo": {
+    "Description": "//h4[contains(text(),'{0}')]/following-sibling::p"
+  }
 }
