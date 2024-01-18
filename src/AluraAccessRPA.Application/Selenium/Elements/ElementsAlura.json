@@ -1,0 +1,14 @@
+{
+
+  "Search": {
+    "Input": "//input[@placeholder='O que você quer aprender?']",
+    "BtnSearch": "//button[@class='header__nav--busca-submit']",
+    "GetCourses": "//li[@class='busca-resultado']"
+  },
+  "GetInfo": {
+    "Description": "//h4[contains(text(),'{0}')]/following-sibling::p",
+    "CourseLink": "//*[contains(text(),'{0}')]",
+    "InstructorElement": "//div/h3[@class = 'instructor-title--name'] | //div/h3[@class = 'formacao-instrutor-nome']",
+    "WorkLoadElement": "//*[@class = 'formacao__info-conclusao'] | //div[@class='formacao__info-destaque'] | //p[@class='courseInfo-card-wrapper-infos']"
+  }
+}
