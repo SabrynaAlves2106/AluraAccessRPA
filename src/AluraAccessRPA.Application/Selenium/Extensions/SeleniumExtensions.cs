@@ -74,26 +74,6 @@ public static class SeleniumExtensions
         if (!driver.WaitChangeLink(oldUrl))
             throw new Exception("Ocorreu uma falha ao clicar no elemento" + element.Text);
 
-
-    }
-    public static void BackNoWait(this IWebDriver driver, int seconds = 60)
-    {
-        driver.Manage().Timeouts().PageLoad = FromSeconds(pageLoadTimeWait);
-        var oldUrl = driver.Url;
- 
-        try
-        {
-            driver.Navigate().Back();
-        }
-        catch
-        {
-            //Aplicação vai ignorar exeption de timeOut 
-        }
-        driver.Manage().Timeouts().PageLoad = FromSeconds(seconds);
-
-        if (!driver.WaitChangeLink(oldUrl))
-            throw new Exception("Ocorreu uma falha ao voltar uma tela ");
-
     }
     private static bool WaitChangeLink(this IWebDriver driver,string oldUrl)
     {
