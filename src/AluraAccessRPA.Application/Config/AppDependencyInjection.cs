@@ -1,4 +1,7 @@
-﻿using AluraAccessRPA.Domain.Interfaces;
+﻿using AluraAccessRPA.Application.Selenium;
+using AluraAccessRPA.Application.Selenium.Controllers;
+using AluraAccessRPA.Application.Selenium.Page;
+using AluraAccessRPA.Domain.Interfaces;
 using AluraAccessRPA.Infrastructure.Context;
 using AluraAccessRPA.Infrastructure.Data;
 using AluraAccessRPA.Infrastructure.Services;
@@ -22,6 +25,11 @@ public static class AppDependencyInjection
         services.AddDbContext<AluraDbContext>(x => x.UseSqlite(connectionString));
         services.AddTransient<RepositoryAlura>();
         services.AddSingleton<IDriverFactoryService,DriverFactoryService>();
+        services.AddSingleton<ControllerAlura>();
+        services.AddSingleton<AluraPage>();
+        services.AddSingleton<Navigator>();
+
+
         //services.AddSingleton<IFileService, FileService>();
 
         return services;

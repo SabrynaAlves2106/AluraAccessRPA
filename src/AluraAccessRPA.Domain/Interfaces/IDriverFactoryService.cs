@@ -7,5 +7,5 @@ namespace AluraAccessRPA.Domain.Interfaces;
 public interface IDriverFactoryService
 {
     abstract IWebDriver Instance { get; }
-    IWebDriver StartDriver(EDriverType driverType = EDriverType.Chrome);
+    IWebDriver StartDriver(EDriverType driverType = EDriverType.Chrome, DriverOptions? opts = null);
 }
