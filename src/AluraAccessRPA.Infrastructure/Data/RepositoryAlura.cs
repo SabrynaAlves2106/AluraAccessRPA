@@ -1,12 +1,6 @@
-﻿using AluraAccessRPA.Domain.Entities;
-using AluraAccessRPA.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
-using OpenQA.Selenium.DevTools.V85.Profiler;
-using System.Data.Common;
+﻿namespace AluraAccessRPA.Infrastructure.Data;
 
-namespace AluraAccessRPA.Infrastructure.Data;
-
-public class RepositoryAlura
+public class RepositoryAlura: IRepository
 {
     private readonly AluraDbContext _dbContext;
     public RepositoryAlura(AluraDbContext dbContext)

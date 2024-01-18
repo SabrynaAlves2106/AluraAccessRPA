@@ -1,14 +1,4 @@
-﻿using AluraAccessRPA.Domain.Enum;
-using AluraAccessRPA.Domain.Interfaces;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.IE;
-using WebDriverManager.DriverConfigs.Impl;
-using WebDriverManager.Helpers;
-
-namespace AluraAccessRPA.Infrastructure.Services;
+﻿namespace AluraAccessRPA.Infrastructure.Services;
 
 public class DriverFactoryService : IDriverFactoryService
 {

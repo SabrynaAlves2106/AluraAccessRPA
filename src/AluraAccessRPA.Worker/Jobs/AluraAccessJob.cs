@@ -1,25 +1,14 @@
-﻿using AluraAccessRPA.Application.Selenium;
-using AluraAccessRPA.Domain.Enum;
-using AluraAccessRPA.Domain.Interfaces;
-using AluraAccessRPA.Infrastructure.Data;
-using AluraAccessRPA.Worker.Common;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using WebDriverManager.DriverConfigs.Impl;
-using WebDriverManager.Helpers;
-
-namespace AluraAccessRPA.Worker.Jobs;
+﻿namespace AluraAccessRPA.Worker.Jobs;
 
 public class AluraAccessJob : JobBase
 {
-    protected readonly RepositoryAlura _repository;
-    private IWebDriver _driver { get; set; }
+    protected readonly IRepository _repository;
     private IDriverFactoryService _driverFactoryService { get; set; }
-    private readonly Navigator _navigator;
+    private readonly INavigator _navigator;
     protected readonly IConfiguration _configuration;
 
-    public AluraAccessJob(ILogger<JobBase> logger, RepositoryAlura repository,
-        IDriverFactoryService driverFactoryService, Navigator navigator,
+    public AluraAccessJob(ILogger<JobBase> logger, IRepository repository,
+        IDriverFactoryService driverFactoryService, INavigator navigator,
         IConfiguration configuration) : base(logger)
     {
         _repository = repository;

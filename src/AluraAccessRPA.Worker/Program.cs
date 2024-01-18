@@ -1,8 +1,4 @@
-﻿
-
-using AluraAccessRPA.Application.Config;
-
-IConfiguration Configuration = default;
+﻿IConfiguration Configuration = default;
 IHostEnvironment HostingEnvironment = default;
 
 IHost host = Host.CreateDefaultBuilder(args)

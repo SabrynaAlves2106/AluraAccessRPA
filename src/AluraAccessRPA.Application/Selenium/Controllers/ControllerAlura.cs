@@ -1,8 +1,4 @@
-﻿using AluraAccessRPA.Application.Selenium.Page;
-using AluraAccessRPA.Domain.Entities;
-using OpenQA.Selenium;
-
-namespace AluraAccessRPA.Application.Selenium.Controllers;
+﻿namespace AluraAccessRPA.Application.Selenium.Controllers;
 
 public class ControllerAlura
 {
@@ -21,6 +17,7 @@ public class ControllerAlura
     }
     public (NavigateResult navigateResult,List<CourseInformation> ListCourses) GetInformation(IEnumerable<string> itens)
     {
+        
         return _aluraPage.GetInformation(itens);
     }
 

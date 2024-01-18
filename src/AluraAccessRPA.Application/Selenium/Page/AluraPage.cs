@@ -1,11 +1,4 @@
-﻿using AluraAccessRPA.Application.Selenium.Elements;
-using AluraAccessRPA.Application.Selenium.Extensions;
-using AluraAccessRPA.Domain.Entities;
-using AluraAccessRPA.Domain.Interfaces;
-using Microsoft.Extensions.Configuration;
-using OpenQA.Selenium;
-
-namespace AluraAccessRPA.Application.Selenium.Page;
+﻿namespace AluraAccessRPA.Application.Selenium.Page;
 
 public class AluraPage : ElementsAlura
 {
@@ -20,6 +13,7 @@ public class AluraPage : ElementsAlura
     {
         try
         {
+            //Realiza navegação
             _driver.GoToNoWait(url);
             return new() { IsSuccess = true, Observation = "Acesso a pagina realizado" };
         }
@@ -32,6 +26,7 @@ public class AluraPage : ElementsAlura
     {
         try
         {
+            //Realiza a busca do curso e pega o nome de todos os cursos
             _driver.WaitElement(inputSearch).SendKeys(course);
             _driver.WaitElement(btnSearch).ClickNoWait();
             var itens = _driver.WaitElements(getCouses).Select((element, v) =>
@@ -53,28 +48,30 @@ public class AluraPage : ElementsAlura
     {
         try
         {
+            var linkSearch = _driver.Url;
             var list = new List<CourseInformation>();
             foreach (var courseName in itens)
             {
                 //Captura a descrição antes de entrar no link
-                var description = _driver.WaitElement(By.XPath(string.Format( descriptionText,courseName))).Text;
+                var description = _driver.WaitElement(By.XPath(string.Format(descriptionText,courseName))).Text;
 
                 //Clica no link do curso
-                _driver.WaitElement(By.XPath($"//*[contains(text(),'{courseName}')]")).ClickNoWait();
+                _driver.WaitElement(By.XPath(string.Format(courseLink,courseName))).ClickNoWait();
 
                 //Pega todos os elementos que contém nome dos instrutores
-                var instructorElements = _driver.WaitElements(By.XPath("//div/h3[@class = 'instructor-title--name'] | //div/h3[@class = 'formacao-instrutor-nome']"));
+                var instructorElements = _driver.WaitElements(instructorsElements);
 
+                //Valida se o nome do instrutor foi localizado, caso não seja insere comentario "Nome dos instrutores não esta disponivel", caso esteja concatena os casos que são diferente de empty/vazio
                 string nameInstructors = instructorElements.Count() > 0 ? string.Join(", ", instructorElements.Select(x => x.Text).Where(x => x != "")) : "Nome dos instrutores não esta disponivel";
 
                 //Pega a carga horaria caso exista
-                var workloadElement = _driver.WaitElement(By.XPath("//*[@class = 'formacao__info-conclusao'] | //div[@class='formacao__info-destaque']"), 5);
+                var workloadElement = _driver.WaitElement(workloadElements, 5);
                 var valueWorkload = workloadElement is not null ? workloadElement.Text.Split("\r")[0] : "Carga horaria não esta disponivel";
 
                 //Adiciona as informações na lista
                 list.Add(new() { Title = courseName, Teacher = nameInstructors, Description = description, WorkLoad = valueWorkload });
 
-                _driver.BackNoWait();
+                _driver.GoToNoWait(linkSearch);
             }
 
             return (new() { IsSuccess = true, Observation = "Acesso a pagina realizado" }, list);

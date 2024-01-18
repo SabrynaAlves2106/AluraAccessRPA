@@ -1,8 +1,4 @@
-﻿
-using AluraAccessRPA.Domain.Enum;
-using OpenQA.Selenium;
-
-namespace AluraAccessRPA.Domain.Interfaces;
+﻿namespace AluraAccessRPA.Domain.Interfaces;
 
 public interface IDriverFactoryService
 {

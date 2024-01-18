@@ -1,9 +1,7 @@
-﻿using AluraAccessRPA.Application.Selenium.Controllers;
-using AluraAccessRPA.Domain.Entities;
-
+﻿
 namespace AluraAccessRPA.Application.Selenium;
 
-public class Navigator
+public class Navigator: INavigator
 {
     protected readonly ControllerAlura _controllerAlura;
     public Navigator(ControllerAlura controllerAlura) =>_controllerAlura = controllerAlura; 

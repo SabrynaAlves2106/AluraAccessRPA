@@ -1,8 +1,4 @@
-﻿
-using Microsoft.Extensions.Configuration;
-using OpenQA.Selenium;
-
-namespace AluraAccessRPA.Application.Selenium.Elements;
+﻿namespace AluraAccessRPA.Application.Selenium.Elements;
 
 public class ElementsAlura
 {
@@ -16,6 +12,9 @@ public class ElementsAlura
 
     //Captura de informações
     public string descriptionText { get; set; }
+    public string courseLink { get; set; }
+    public By instructorsElements { get; set; }
+    public By workloadElements { get; set; }
 
     private void SetValues(IConfiguration config)
     {
@@ -24,6 +23,8 @@ public class ElementsAlura
         getCouses = By.XPath(config["Search:GetCourses"]);
 
         descriptionText = config["GetInfo:Description"];
-
+        courseLink = config["GetInfo:CourseLink"];
+        instructorsElements = By.XPath(config["GetInfo:InstructorElement"]);
+        workloadElements = By.XPath(config["GetInfo:WorkLoadElement"]);
     }
 }

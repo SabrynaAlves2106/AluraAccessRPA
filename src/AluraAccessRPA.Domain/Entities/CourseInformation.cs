@@ -1,8 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace AluraAccessRPA.Domain.Entities;
+﻿namespace AluraAccessRPA.Domain.Entities;
 
 public class CourseInformation
 {

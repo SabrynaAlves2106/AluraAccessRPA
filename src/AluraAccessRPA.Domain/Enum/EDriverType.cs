@@ -1,6 +1,4 @@
-﻿
-namespace AluraAccessRPA.Domain.Enum;
-
+﻿namespace AluraAccessRPA.Domain.Enum;
 public enum EDriverType
 {
     Chrome = 0,

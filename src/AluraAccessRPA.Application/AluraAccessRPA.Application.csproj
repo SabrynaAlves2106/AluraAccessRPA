@@ -7,16 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Selenium\Elements\ElementsAlura.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Selenium\Elements\ElementsAlura.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.9" />
@@ -27,6 +17,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AluraAccessRPA.Infrastructure\AluraAccessRPA.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Selenium\Elements\ElementsAlura.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

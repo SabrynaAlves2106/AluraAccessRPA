@@ -1,7 +1,4 @@
-﻿using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using static System.TimeSpan;
-using OpenQA.Selenium.Remote;
+﻿using System.Data.OleDb;
 
 namespace AluraAccessRPA.Application.Selenium.Extensions;
 
@@ -47,7 +44,7 @@ public static class SeleniumExtensions
             driver.Navigate().GoToUrl(url);
             driver.Manage().Timeouts().PageLoad = FromSeconds(seconds);
         }
-        catch (Exception e)
+        catch
         {
             driver.Manage().Timeouts().PageLoad = FromSeconds(seconds);
             //Aplicação vai ignorar exeption de timeOut 
@@ -72,20 +69,18 @@ public static class SeleniumExtensions
         {
             //Aplicação vai ignorar exeption de timeOut 
         }
-        while (driver.Url == oldUrl && i < 10)
-        {
-            Thread.Sleep(FromSeconds(1));
-            //Serve apenas para aguardar que seja alterada a URL
-        }
-        if (i == 10)
-            throw new Exception("Ocorreu uma falha ao clicar no elemento" + element.Text);
         driver.Manage().Timeouts().PageLoad = FromSeconds(seconds);
+
+        if (!driver.WaitChangeLink(oldUrl))
+            throw new Exception("Ocorreu uma falha ao clicar no elemento" + element.Text);
+
+
     }
     public static void BackNoWait(this IWebDriver driver, int seconds = 60)
     {
         driver.Manage().Timeouts().PageLoad = FromSeconds(pageLoadTimeWait);
         var oldUrl = driver.Url;
-        int i = 0;
+ 
         try
         {
             driver.Navigate().Back();
@@ -94,13 +89,32 @@ public static class SeleniumExtensions
         {
             //Aplicação vai ignorar exeption de timeOut 
         }
-        while (driver.Url == oldUrl && i < 10)
+        driver.Manage().Timeouts().PageLoad = FromSeconds(seconds);
+
+        if (!driver.WaitChangeLink(oldUrl))
+            throw new Exception("Ocorreu uma falha ao voltar uma tela ");
+
+    }
+    private static bool WaitChangeLink(this IWebDriver driver,string oldUrl)
+    {
+        int i = 0;
+        //Serve apenas para aguardar que seja alterada a URL
+        while (true)
         {
-            Thread.Sleep(FromSeconds(1));
-            //Serve apenas para aguardar que seja alterada a URL
+            //try catch pois se a pagina não carregar a automação não consegue validar o link
+            try
+            {
+                if (driver.Url == oldUrl && i++ < 10)
+                    Thread.Sleep(FromSeconds(1));
+                else
+                    break;
+            }
+            catch { }
+
         }
         if (i == 10)
-            throw new Exception("Ocorreu uma falha ao voltar uma tela ");
-        driver.Manage().Timeouts().PageLoad = FromSeconds(seconds);
+            return false;
+        
+        return true;
     }
 }
